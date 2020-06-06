@@ -3,9 +3,13 @@ import {View,StyleSheet} from 'react-native'
 
 export default props => {
 
+   const styleColor = {
+      borderColor: props.color || 'black'
+   }
+
    return (
       <View style={styles.container}>
-         <View style={[styles.circle]}></View>
+         <View style={[styles.circle,styleColor]}></View>
       </View>
    )
 

@@ -3,10 +3,14 @@ import {View,StyleSheet} from 'react-native'
 
 export default props => {
 
+   const styleColor = {
+      backgroundColor: props.color || 'black'
+   }
+
    return (
       <View style={styles.container}>
-         <View style={[styles.line,{ transform: [{ rotate:'45deg' }] }]}></View>
-         <View style={[styles.line,{ transform: [{ rotate:'135deg' }] }]}></View>
+         <View style={[styles.line,{ transform: [{ rotate:'45deg' }] },styleColor]}></View>
+         <View style={[styles.line,{ transform: [{ rotate:'135deg' }] },styleColor]}></View>
       </View>
    )
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import {View,StyleSheet} from 'react-native'
 import Field from './Field'
+import params from '../params'
 
 export default props => {
 
@@ -8,24 +9,47 @@ export default props => {
 
       const columns = row.map((column,c) => {
 
-         const styleField = [styles.field]
+         let styleField = [styles.column]
+         if(c === 1) styleField.push(styles.columnCenter)
 
-         if(c == 1) styleField.push(styles.columnCenter)
+         return <View style={styleField}><Field {...column} onClick={() => {
+            props.onSelected(r,c)
+         }} key={c}></Field></View>
 
-         return <Field onClick={props.onCLick}></Field>
       })
 
-      return <View>{columns}</View>
+      const styleRow = [styles.row]
+
+      if(r == 1) styleRow.push(styles.rowCenter)
+      
+      return <View style={styleRow} key={r}>{columns}</View>
 
    })
-
-   return (
-      <View>
-         
-      </View>
-   )
+   
+   return <View>{rows}</View>
 }
 
 const styles = StyleSheet.create({
-   
+   row:{
+      flexDirection:'row',
+      justifyContent:'flex-end',
+      alignItems:'center',
+      height:params.getRowAmount(),
+   },
+   rowCenter:{
+      borderTopColor:'black',
+      borderBottomColor:'black',
+      borderBottomWidth:2,
+      borderTopWidth:2
+   },
+   column:{
+      justifyContent: 'center',
+      alignItems:'center',
+   },
+   columnCenter:{
+      borderLeftColor: 'black',
+      borderRightColor: 'black',
+      borderRightWidth: 2,
+      borderLeftWidth: 2
+   }
 })
