@@ -2,6 +2,7 @@
 import { Dimensions } from 'react-native'
 
 export default {
+   dbname: 'db/dbGameDeuVelha.db',
    headerRatio: 0.15,
    getColumnAmount(){
       const width = Dimensions.get('window').width

@@ -26,10 +26,14 @@ export default props => {
 
    })
    
-   return <View>{rows}</View>
+   return <View style={styles.container}>{rows}</View>
 }
 
 const styles = StyleSheet.create({
+   container:{
+      backgroundColor:'white',
+      borderRadius: 5
+   },
    row:{
       flexDirection:'row',
       justifyContent:'flex-end',

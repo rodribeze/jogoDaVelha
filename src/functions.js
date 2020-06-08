@@ -1,5 +1,8 @@
 
 
+import params from './params'
+import { Query } from './db'
+
 const createBoard = () => {
 
    return Array(3).fill(0).map((_,row) => {
@@ -70,6 +73,7 @@ const wonDrawingVertical = (board,drawing) => {
    }
 
 }
+
 const wonDrawingHorizontal = (board,drawing) => {
 
    let row = 0
@@ -199,9 +203,23 @@ const wonGame = (board,drawing) => {
 
 }
 
+const getUser = async () => {
+
+   try{
+
+      let response = await Query('SELECT * from usuarios')
+      return response.data.rows.length > 0 ? response.data.rows[0] : null
+   
+   } catch(e){
+      console.debug('error',e)
+   }
+
+}
+
 export {
    createBoard,
    finish,
    cloneBoard,
-   wonGame
+   wonGame,
+   getUser
 }
