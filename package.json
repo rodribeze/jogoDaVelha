@@ -10,11 +10,15 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "native-base": "^2.13.12",
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-elements": "^2.0.2",
     "react-native-motion": "^1.0.5",
+    "react-native-qrcode": "^0.2.7",
+    "react-native-qrcode-svg": "^6.0.6",
     "react-native-sqlite-storage": "^5.0.0",
+    "react-native-svg": "^12.1.0",
     "react-native-tab-view": "^2.14.4",
     "react-native-vector-icons": "^6.6.0",
     "styled-components": "^5.1.1"

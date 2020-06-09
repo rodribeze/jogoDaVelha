@@ -11,14 +11,17 @@ import {
   StyleSheet,
   View,
   Animated,
-  Alert
+  Alert,
+  Text
 } from 'react-native';
 
 import Board from './src/components/Board'
-import { Header } from 'react-native-elements'
+// import { Header } from 'react-native-elements'
+import { Container,Header,Left,Right,Title, StyleProvider } from 'native-base'
 import Icon from 'react-native-vector-icons/Ionicons';
-import Multiplayer from './src/components/Multiplayer'
 
+import getTheme from './native-base-theme/components';
+import material from './native-base-theme/variables/material';
 
 import { 
    createBoard,
@@ -28,6 +31,7 @@ import {
    getUser 
 } from './src/functions'
 
+import Multiplayer from './src/components/Multiplayer'
 
 class App extends Component {
 
@@ -47,7 +51,7 @@ class App extends Component {
          finish: false,
          currentDrawing: false,
          showOptionsMultiplayer: false,
-         boardTranslateY: new Animated.Value(0)
+         boardTranslateY: new Animated.Value(350)
       }
    }
 
@@ -86,12 +90,10 @@ class App extends Component {
 
    boardDown = () => {
       Animated.timing(this.state.boardTranslateY, {
-         toValue: 150,
+         toValue: 350,
          duration: 1000,
          useNativeDriver: true
-       }).start(() => {
-          this.setState({boardTranslateY:new Animated.Value(150)})
-       });
+       }).start();
    }
 
    boardUp = () => {
@@ -99,9 +101,7 @@ class App extends Component {
          toValue: 0,
          duration: 1000,
          useNativeDriver: true
-       }).start(() => {
-         this.setState({boardTranslateY:new Animated.Value(0)})
-      });
+       }).start();
    }
 
    onOptionsMultiplayer = () => {
@@ -120,31 +120,40 @@ class App extends Component {
   
    render(){
 
-      const styleBoard = []
+      const styleBoard = [styles.board]
 
-      if(this.state.showOptionsMultiplayer) styleBoard.push({
+      styleBoard.push({
+         marginTop:10,
          transform:[{
             translateY:this.state.boardTranslateY
          }]
       })
 
       return (
-         <View style={styles.container}>
-            <Header
-               backgroundColor="#1b7ed7"
-               statusBarProps={{ translucent: true }}
-               leftComponent={<Icon name="ios-add" size={30} color="white" onPress={this.onOptionsMultiplayer} />}
-               centerComponent={{ text: '# Jogo da Velha', style: { color: '#fff' } }}
-               rightComponent={this.state.mode == 'offline' ? 
-                  <Icon name="ios-refresh" size={30} color="white" onPress={this.resetGame} /> : 
-                  <Icon name="ios-return-right" size={30} color="white" onPress={this.resetGame} />}
-            />
-            {this.showOptionsMultiplayer ? (<Multiplayer></Multiplayer>) 
-            : null}
-            <Animated.View style={styleBoard}>
-               <Board onSelected={this.onSelected} board={this.state.board}></Board>
-            </Animated.View>
-         </View>
+         <StyleProvider style={getTheme(material)}>
+            <Container style={styles.container}>
+               <Header>
+                  <Left style={{flex:1}}>
+                     <Icon name="ios-qr-scanner" size={30} color="white" onPress={this.onOptionsMultiplayer} />
+                  </Left>
+                  <View style={{alignItems:'center',justifyContent:'center',flex:2}}>
+                     <Title># Jogo da velha</Title>
+                  </View>
+                  <Right style={{flex:1}}>
+                     {this.state.mode == 'offline' ? 
+                     <Icon name="ios-refresh" size={30} color="white" onPress={this.resetGame} /> : 
+                     <Icon name="ios-return-right" size={30} color="white" onPress={this.resetGame} />}
+                  </Right>
+               </Header>
+               {this.state.showOptionsMultiplayer ? (<View style={{position:'absolute',top:56}}>
+                  <Multiplayer></Multiplayer>
+               </View>) : null}
+               
+               <Animated.View style={styleBoard}>
+                  <Board  onSelected={this.onSelected} board={this.state.board}></Board>
+               </Animated.View>
+            </Container>
+         </StyleProvider>
       )
    }
 
@@ -152,9 +161,12 @@ class App extends Component {
 
 const styles = StyleSheet.create({
   container:{
-     flex:1,
-     alignItems: 'center',
-     backgroundColor: '#1b7ed7'
+     backgroundColor: '#1b7ed7',
+
+  },
+  board:{
+      flex:2,
+      alignItems: 'center',
   },
   containerOptionOpened:{
 
@@ -162,11 +174,6 @@ const styles = StyleSheet.create({
   header:{
       fontWeight:'bold',
       fontSize:20
-  },
-  boardDown:{
-     transform: [{
-         translateY: 150
-     }]
   }
 });
 
